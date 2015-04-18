@@ -1,6 +1,5 @@
 package ForMod;
 
-
 import java.util.ArrayList;
 
    public class Formation {

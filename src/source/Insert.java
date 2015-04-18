@@ -34,7 +34,7 @@ import ForMod.*;
 		ModuleFormation Module_Formation2 = new ModuleFormation(Module2);
 	
 		
-		//Formation
+		//Ajout Formation
 		
 		String Formation_nom = "Licence 3eme annee";
 		Double Formation_duree= (double) 4;

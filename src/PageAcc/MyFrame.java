@@ -3,19 +3,20 @@ package PageAcc;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 public class MyFrame extends JFrame {
 	
@@ -26,14 +27,14 @@ public class MyFrame extends JFrame {
 	public MyFrame() {
 		
 			
-		this.setTitle("Fenêtre Page d'Accueil");
+		this.setTitle("Fenetre Page d'Accueil");
 		this.setResizable(false);
 		
 		this.setSize(longueur,hauteur);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				
-		//.. En-TËTE POSITION n°1
+		//.. En-Tï¿½TE POSITION nï¿½1
 			/*	JPanel enTete = new JPanel();
 				enTete.setLayout(new FlowLayout());
 				
@@ -47,54 +48,100 @@ public class MyFrame extends JFrame {
 				enTete.setPreferredSize(new Dimension(100,hauteur-600));
 								
 		
-		//.. MENU POSTION n°2 GRIDBAGLAYOUT
+		//.. MENU POSTION nï¿½2 GRIDBAGLAYOUT
 				JPanel menu = new JPanel();
 				menu.setLayout(new GridBagLayout());
 				
 				//menu.setBackground(Color.GRAY);	
 				menu.setBorder(BorderFactory.createLineBorder(Color.RED,3));
 				menu.setPreferredSize(new Dimension(longueur,hauteur-350));
-				/*
+                               
+                               /*TEST1 ICONBUTTON
+                                Icon warnIcon = new ImageIcon("PicNewDossier.png");
+                                 JButton b_create = new JButton(warnIcon);*/
+                                
+                                JButton b_create = new JButton();
+                                b_create.setToolTipText("Menu creation de CALENDRIER");
+                                try {
+                                     Image img = ImageIO.read(new File("PicNewDossier.png")); 
+                                     Image newimg = img.getScaledInstance( 60, 50,  java.awt.Image.SCALE_SMOOTH );
+                                     b_create.setIcon(new ImageIcon(newimg));
+                                     b_create.setBorder(BorderFactory.createEmptyBorder());
+                                   //  b_create.setContentAreaFilled(false);
+                                     } catch (IOException ex) {
+                                         ex.printStackTrace(); }
+                              
+                             JButton b_view = new JButton();
+                                b_view.setToolTipText("Menu aperÃ§u de CALENDRIER");
+                             try {
+                                     Image img = ImageIO.read(new File("Calendrier.png")); 
+                                     Image newimg = img.getScaledInstance( 60, 50,  java.awt.Image.SCALE_SMOOTH );
+                                     b_view.setIcon(new ImageIcon(newimg));
+                                     b_view.setBorder(BorderFactory.createEmptyBorder());
+                                     } catch (IOException ex) {
+                                         ex.printStackTrace(); }
+                                
+                             JButton b_form = new JButton ();
+                                b_form.setToolTipText("Menu gestion de FORMATION");
+                              try {
+                                     Image img = ImageIO.read(new File("gestion.png")); 
+                                     Image newimg = img.getScaledInstance( 60, 50,  java.awt.Image.SCALE_SMOOTH );
+                                     b_form.setIcon(new ImageIcon(newimg));
+                                     b_form.setBorder(BorderFactory.createEmptyBorder());
+                                     } catch (IOException ex) {
+                                         ex.printStackTrace(); }
+                             
+                            
+                             
+                            GridBagConstraints GBGC = new GridBagConstraints();
+                           // GBGC.weightx = 1;
+                            //GBGC.weighty = 1;
+                            GBGC.insets = new Insets(10, 10, 10, 10);
+                            //.. Position en x
+                            GBGC.gridx = 0;
+                            //.. Position en y
+                            GBGC.gridy = 0;
+                            //.. Nb de lignes
+                            GBGC.gridheight = 1;
+                            //.. Nb de colonnes 
+                            GBGC.gridwidth = 1;
+                            GBGC.fill = GridBagConstraints.HORIZONTAL;
+                            menu.add( b_create, GBGC);
+
+                            GBGC.gridx = 1;
+                            GBGC.gridy = 0;
+                            GBGC.gridwidth = 1;
+                            GBGC.gridheight = 1;
+                            GBGC.fill = GridBagConstraints.HORIZONTAL;
+                            menu.add( b_view, GBGC);
+
+                            GBGC.gridx = 3;
+                            GBGC.gridy = 0;
+                            GBGC.gridwidth = 1;
+                            GBGC.gridheight = 1;
+                            GBGC.fill = GridBagConstraints.HORIZONTAL;
+                            menu.add(b_form, GBGC);
+      
+                                
+                                /*
 				 *  new GridBagConstraints:
-				 *  -coordonées (x,y)
+				 *  -coordonï¿½es (x,y)
 				 * 	-nb de cellules que le bouton occupe (val1,val2)	
-				 * 	-poids affecté (si extension)
+				 * 	-poids affectï¿½ (si extension)
 				 * 	-FIRST_LINE_START position du composant au sein de sa ou ses cellules
-				 * 	-NONE comportement si espace dispo > taille minimale nécessaire
-				 * 	-Insets definit les espaces de séparation autour du composant
+				 * 	-NONE comportement si espace dispo > taille minimale nï¿½cessaire
+				 * 	-Insets definit les espaces de sï¿½paration autour du composant
 				 *	-augmenter taille minimale de la cellule
 				 */
-				JButton bout1 = new JButton("bout1");
-				menu.add(bout1,
-							new GridBagConstraints(0,0, 1,1, 0.0,0.0,
-							GridBagConstraints.FIRST_LINE_START,
-							GridBagConstraints.NONE,new Insets
-							(5,5,5,5), 0,0));
-				menu.add(bout1);
-				
-				JButton bout2 = new JButton("bout2");
-				menu.add(bout2,
-							new GridBagConstraints(0,1, 1,1, 0.0,0.0,
-							GridBagConstraints.FIRST_LINE_START,
-							GridBagConstraints.NONE,new Insets
-							(5,5,5,5), 0,0));
-				menu.add(bout2);
-				
-				JButton bout3 = new JButton("bout3");
-				menu.add(bout3,
-							new GridBagConstraints(2,2, 1,1, 0.0,0.0,
-							GridBagConstraints.FIRST_LINE_START,
-							GridBagConstraints.NONE,new Insets
-							(5,5,5,5), 0,0));
-				menu.add(bout3);
+			
 		
-		//.. BAS de PAGE POSITION n°3
+		//.. BAS de PAGE POSITION nï¿½3
 				/*
 				 * NE FONCTIONNE PAS 
-				 * Panneau bas = new Panneau("Copyright © 2015 DJERIR-EDOO-HENRY "
+				 * Panneau bas = new Panneau("Copyright ï¿½ 2015 DJERIR-EDOO-HENRY "
 						+ "and/or its affiliates. All rights reserved.",250,370,10,longueur,hauteur-450);
 				*/
-				Panneau bas = new Panneau("Copyright © 2015 DJERIR-EDOO-HENRY "
+				Panneau bas = new Panneau("Copyright ï¿½ 2015 DJERIR-EDOO-HENRY "
 						+ "and/or its affiliates. All rights reserved.",150,370,10);
 				bas.setLayout(new BorderLayout());
 				

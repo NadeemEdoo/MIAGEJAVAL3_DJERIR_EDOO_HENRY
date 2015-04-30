@@ -18,11 +18,20 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import java.awt.event.*;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileSystemView;
+
 public class MyFrame extends JFrame {
 	
 	
 		private int longueur = 900;
 		private int hauteur = 600;
+                
+                //Titre des Bouttons
+                private String create = "Menu creation de CALENDRIER";
+                private String view = "Menu aperçu de CALENDRIER";
+                private String gestion = "Menu gestion de FORMATION"; 
 		
 	public MyFrame() {
 		
@@ -59,10 +68,10 @@ public class MyFrame extends JFrame {
                                /*TEST1 ICONBUTTON
                                 Icon warnIcon = new ImageIcon("PicNewDossier.png");
                                  JButton b_create = new JButton(warnIcon);*/
-                                
-                                JButton b_create = new JButton();
-                                b_create.setToolTipText("Menu creation de CALENDRIER");
-                                try {
+                             //.. CREATION des BOUTONS   
+                             JButton b_create = new JButton();
+                                b_create.setToolTipText(create);
+                             try {
                                      Image img = ImageIO.read(new File("PicNewDossier.png")); 
                                      Image newimg = img.getScaledInstance( 60, 50,  java.awt.Image.SCALE_SMOOTH );
                                      b_create.setIcon(new ImageIcon(newimg));
@@ -70,19 +79,50 @@ public class MyFrame extends JFrame {
                                    //  b_create.setContentAreaFilled(false);
                                      } catch (IOException ex) {
                                          ex.printStackTrace(); }
+                             b_create.addMouseListener(new MouseAdapter() {
+                             //...CLASS ANONYME INTERNE
+				public void mouseClicked(MouseEvent event){ 
+					System.out.println("Un clic sur le bouton " + create);
+					};
+					
+                             });
                               
                              JButton b_view = new JButton();
-                                b_view.setToolTipText("Menu aperçu de CALENDRIER");
-                             try {
+                                b_view.setToolTipText(view);
+                              try {
                                      Image img = ImageIO.read(new File("Calendrier.png")); 
                                      Image newimg = img.getScaledInstance( 60, 50,  java.awt.Image.SCALE_SMOOTH );
                                      b_view.setIcon(new ImageIcon(newimg));
                                      b_view.setBorder(BorderFactory.createEmptyBorder());
                                      } catch (IOException ex) {
                                          ex.printStackTrace(); }
+                              b_view.addMouseListener(new MouseAdapter() {
+                             //...CLASS ANONYME INTERNE
+				public void mouseClicked(MouseEvent event){ 
+					//System.out.println("Un clic sur le bouton " + view);
+
+                                FileSystemView vueSysteme = FileSystemView.getFileSystemView(); 
+                                //récupération des répertoires
+                                File defaut = vueSysteme.getDefaultDirectory(); 
+                                //création et affichage des JFileChooser
+                                JFileChooser defautChooser = new JFileChooser(defaut);
+                                defautChooser.showOpenDialog(null);
+                              // VOIR REPERTOIRE "BUREAU"
+                              /*File home = vueSysteme.getHomeDirectory();   
+                                JFileChooser homeChooser = new JFileChooser(home);
+                                homeChooser.showOpenDialog(null);*/
+                                
+                                //VOIR tous les DISQUES 
+                                /*JFileChooser chooser = new JFileChooser();
+                                chooser.setCurrentDirectory(new File("/"));
+                                chooser.changeToParentDirectory();
+                                chooser.showOpenDialog(null);*/
+                             
+                                };				
+                             });
                                 
                              JButton b_form = new JButton ();
-                                b_form.setToolTipText("Menu gestion de FORMATION");
+                                b_form.setToolTipText(gestion);
                               try {
                                      Image img = ImageIO.read(new File("gestion.png")); 
                                      Image newimg = img.getScaledInstance( 60, 50,  java.awt.Image.SCALE_SMOOTH );
@@ -90,9 +130,13 @@ public class MyFrame extends JFrame {
                                      b_form.setBorder(BorderFactory.createEmptyBorder());
                                      } catch (IOException ex) {
                                          ex.printStackTrace(); }
-                             
-                            
-                             
+                              b_form.addMouseListener(new MouseAdapter() {
+                             //...CLASS ANONYME INTERNE
+				public void mouseClicked(MouseEvent event){ 
+					System.out.println("Un clic sur le bouton " + gestion);
+					};			
+                             });
+                           
                             GridBagConstraints GBGC = new GridBagConstraints();
                            // GBGC.weightx = 1;
                             //GBGC.weighty = 1;
@@ -121,8 +165,7 @@ public class MyFrame extends JFrame {
                             GBGC.gridheight = 1;
                             GBGC.fill = GridBagConstraints.HORIZONTAL;
                             menu.add(b_form, GBGC);
-      
-                                
+
                                 /*
 				 *  new GridBagConstraints:
 				 *  -coordon�es (x,y)
@@ -133,8 +176,7 @@ public class MyFrame extends JFrame {
 				 * 	-Insets definit les espaces de s�paration autour du composant
 				 *	-augmenter taille minimale de la cellule
 				 */
-			
-		
+
 		//.. BAS de PAGE POSITION n�3
 				/*
 				 * NE FONCTIONNE PAS 
@@ -161,8 +203,7 @@ public class MyFrame extends JFrame {
 				*	bas.add(textArea);	
 				*	textArea.setWrapStyleWord(true);
 				*/
-						
-				
+
 		//.. BACKGROUND
 				JPanel background = new JPanel();
 				background.setLayout(new BoxLayout(background,BoxLayout.Y_AXIS));
@@ -172,11 +213,6 @@ public class MyFrame extends JFrame {
 				background.add(bas);
 				
 		//.. suite CONFIG
-				this.getContentPane().add(background);
-				
-	}
-	
-	
-	
-
+				this.getContentPane().add(background);		
+        }	
 }

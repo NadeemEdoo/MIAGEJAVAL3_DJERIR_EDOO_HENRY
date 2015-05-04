@@ -5,6 +5,8 @@
  */
 package JTableFenetres;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author wafadjerir
@@ -29,7 +31,7 @@ public class JTableCreaModule extends javax.swing.JFrame {
 
         jMenuItem1 = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableFormation = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -37,39 +39,34 @@ public class JTableCreaModule extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         comboFormation = new javax.swing.JComboBox();
         textModule = new javax.swing.JTextField();
-        textApprev = new javax.swing.JTextField();
+        textAbbrev = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        textField3 = new javax.swing.JTextField();
+        textNbSeance = new javax.swing.JTextField();
         b_ajout = new javax.swing.JButton();
         b_delete = new javax.swing.JButton();
         b_update = new javax.swing.JButton();
         b_sauve = new javax.swing.JButton();
-        comboFormation1 = new javax.swing.JComboBox();
-        jLabel7 = new javax.swing.JLabel();
+        comboCouleur = new javax.swing.JComboBox();
+        messageFormation = new javax.swing.JLabel();
+        messageErreur = new javax.swing.JLabel();
 
         jMenuItem1.setText("jMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableFormation.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Module", "Appréviation", "Couleur", "Nombre de seance"
+                "Module", "Abbréviation", "Couleur", "Nombre de seance"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, true, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -80,9 +77,16 @@ public class JTableCreaModule extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
+        jTableFormation.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableFormationMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableFormation);
+        if (jTableFormation.getColumnModel().getColumnCount() > 0) {
+            jTableFormation.getColumnModel().getColumn(0).setResizable(false);
+            jTableFormation.getColumnModel().getColumn(2).setResizable(false);
+            jTableFormation.getColumnModel().getColumn(3).setResizable(false);
         }
 
         jLabel1.setText("       Creation des modules ");
@@ -90,7 +94,7 @@ public class JTableCreaModule extends javax.swing.JFrame {
 
         jLabel2.setText("Formation");
 
-        jLabel3.setText("Appréviation");
+        jLabel3.setText("Abbréviation");
 
         jLabel4.setText("Nom Module");
 
@@ -98,23 +102,19 @@ public class JTableCreaModule extends javax.swing.JFrame {
 
         comboFormation.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        textModule.setText("jTextField1");
         textModule.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textModuleActionPerformed(evt);
             }
         });
 
-        textApprev.setText("jTextField2");
-        textApprev.addActionListener(new java.awt.event.ActionListener() {
+        textAbbrev.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textApprevActionPerformed(evt);
+                textAbbrevActionPerformed(evt);
             }
         });
 
         jLabel6.setText("Nombre de séances");
-
-        textField3.setText("jTextField3");
 
         b_ajout.setText("Ajouter");
         b_ajout.addActionListener(new java.awt.event.ActionListener() {
@@ -124,6 +124,11 @@ public class JTableCreaModule extends javax.swing.JFrame {
         });
 
         b_delete.setText("Supprimer");
+        b_delete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                b_deleteMouseClicked(evt);
+            }
+        });
         b_delete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 b_deleteActionPerformed(evt);
@@ -144,9 +149,18 @@ public class JTableCreaModule extends javax.swing.JFrame {
             }
         });
 
-        comboFormation1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboCouleur.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Gris", "Rouge", "Vert", "Jaune", "Rose", "Violet", "Bleu", "Orange", " " }));
+        comboCouleur.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboCouleurActionPerformed(evt);
+            }
+        });
 
-        jLabel7.setText("jLabel7");
+        messageFormation.setForeground(new java.awt.Color(255, 51, 51));
+        messageFormation.setAlignmentX(10.0F);
+
+        messageErreur.setForeground(new java.awt.Color(255, 51, 51));
+        messageErreur.setAlignmentX(10.0F);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,18 +168,6 @@ public class JTableCreaModule extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(b_ajout)
-                        .addGap(40, 40, 40)
-                        .addComponent(b_delete)
-                        .addGap(37, 37, 37)
-                        .addComponent(b_update)
-                        .addGap(34, 34, 34)
-                        .addComponent(b_sauve))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(171, 171, 171)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,19 +180,37 @@ public class JTableCreaModule extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(comboFormation, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(textModule, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(textApprev, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(textField3)
-                            .addComponent(comboFormation1, 0, 103, Short.MAX_VALUE))
-                        .addGap(175, 175, 175)))
-                .addGap(0, 31, Short.MAX_VALUE))
+                            .addComponent(textAbbrev, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(textNbSeance)
+                            .addComponent(comboCouleur, 0, 103, Short.MAX_VALUE))
+                        .addGap(175, 175, 175))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(171, 171, 171)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(64, 64, 64)
+                                .addComponent(b_ajout, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(35, 35, 35)
+                                .addComponent(b_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(33, 33, 33)
+                                .addComponent(b_update)
+                                .addGap(18, 18, 18)
+                                .addComponent(b_sauve, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(0, 88, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 521, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(111, 111, 111)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(135, 135, 135)
-                        .addComponent(jLabel7)))
+                        .addGap(119, 119, 119)
+                        .addComponent(messageFormation, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(200, 200, 200)
+                        .addComponent(messageErreur, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -209,53 +229,109 @@ public class JTableCreaModule extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textApprev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textAbbrev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(comboFormation1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboCouleur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textNbSeance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(b_ajout)
                     .addComponent(b_delete)
                     .addComponent(b_update)
                     .addComponent(b_sauve))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(jLabel7)
-                .addGap(31, 31, 31)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(messageFormation, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(messageErreur, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textApprevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textApprevActionPerformed
+    private void textAbbrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textAbbrevActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textApprevActionPerformed
+    }//GEN-LAST:event_textAbbrevActionPerformed
 
     private void textModuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textModuleActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textModuleActionPerformed
 
     private void b_ajoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ajoutActionPerformed
-        // TODO add your handling code here:
+        // Procédure d'ajout les lignes de Modules à la formation (Fenetre Creation des modules)
+        //A COMPLETER POUR LES AUTRES ELEMENTS 
+        messageErreur.setText("");//Vider le label Message
+        DefaultTableModel model = (DefaultTableModel) jTableFormation.getModel();
+        if(!textModule.getText().trim().equals("")){
+        model.addRow(new Object[]{textModule.getText(),textAbbrev.getText(),comboCouleur.getSelectedItem().toString(),textNbSeance.getText() });
+        }else {
+            messageErreur.setText("WARNING! Veuillez rentrer un nom de module (min 4 caractères)");
+            
+        }
     }//GEN-LAST:event_b_ajoutActionPerformed
 
     private void b_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_deleteActionPerformed
-        // TODO add your handling code here:
+            // Procédure pour supprimer un module 
+        
+        messageErreur.setText("");//Vider le label Message
+        DefaultTableModel model = (DefaultTableModel) jTableFormation.getModel();
+        if(jTableFormation.getSelectedRow() == -1 ){
+            if(jTableFormation.getRowCount() == 0){
+                messageErreur.setText("WARNING DELETE! La table est vide");
+            }else {
+                 messageErreur.setText("WARNING DELETE! Vous devez selectionner au moin une ligne ");
+            }
+        }else {
+        model.removeRow(jTableFormation.getSelectedRow());
+            
+        }
     }//GEN-LAST:event_b_deleteActionPerformed
 
     private void b_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_updateActionPerformed
-        // TODO add your handling code here:
+        // Procédure pour mettre à jour un module 
+        
+        messageErreur.setText("");//Vider le label Message
+        DefaultTableModel model = (DefaultTableModel) jTableFormation.getModel();
+        if(jTableFormation.getSelectedRow() == -1 ){
+            if(jTableFormation.getRowCount() == 0){
+                messageErreur.setText("WARNING UPDATE! La table est vide");
+            }else {
+                 messageErreur.setText("WARNING UPDATE! Vous devez selectionner au moin une ligne ");
+            }
+        }else {
+        model.setValueAt(textModule.getText(), jTableFormation.getSelectedRow(), 0);
+        model.setValueAt(textAbbrev.getText(), jTableFormation.getSelectedRow(), 1);
+        model.setValueAt(comboCouleur.getSelectedItem().toString(), jTableFormation.getSelectedRow(), 2);
+        model.setValueAt(textNbSeance.getText(), jTableFormation.getSelectedRow(), 3);
+        }
     }//GEN-LAST:event_b_updateActionPerformed
 
     private void b_sauveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_sauveActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_b_sauveActionPerformed
+
+    private void comboCouleurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCouleurActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboCouleurActionPerformed
+
+    private void b_deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_deleteMouseClicked
+        
+    }//GEN-LAST:event_b_deleteMouseClicked
+
+    private void jTableFormationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableFormationMouseClicked
+       DefaultTableModel model = (DefaultTableModel) jTableFormation.getModel();
+        textModule.setText(model.getValueAt(jTableFormation.getSelectedRow(),0).toString());
+        textAbbrev.setText(model.getValueAt(jTableFormation.getSelectedRow(),1).toString());
+        comboCouleur.setSelectedItem(model.getValueAt(jTableFormation.getSelectedRow(),2).toString());
+        textNbSeance.setText(model.getValueAt(jTableFormation.getSelectedRow(),3).toString());
+    }//GEN-LAST:event_jTableFormationMouseClicked
 
     /**
      * @param args the command line arguments
@@ -297,20 +373,21 @@ public class JTableCreaModule extends javax.swing.JFrame {
     private javax.swing.JButton b_delete;
     private javax.swing.JButton b_sauve;
     private javax.swing.JButton b_update;
+    private javax.swing.JComboBox comboCouleur;
     private javax.swing.JComboBox comboFormation;
-    private javax.swing.JComboBox comboFormation1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField textApprev;
-    private javax.swing.JTextField textField3;
+    private javax.swing.JTable jTableFormation;
+    private javax.swing.JLabel messageErreur;
+    private javax.swing.JLabel messageFormation;
+    private javax.swing.JTextField textAbbrev;
     private javax.swing.JTextField textModule;
+    private javax.swing.JTextField textNbSeance;
     // End of variables declaration//GEN-END:variables
 }

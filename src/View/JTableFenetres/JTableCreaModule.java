@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package JTableFenetres;
-
+package View.JTableFenetres;
+import Modele.ForMod.*;
+import Modele.Initialisation.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -47,8 +49,10 @@ public class JTableCreaModule extends javax.swing.JFrame {
         b_update = new javax.swing.JButton();
         b_sauve = new javax.swing.JButton();
         comboCouleur = new javax.swing.JComboBox();
-        messageFormation = new javax.swing.JLabel();
+        msgNomFormation = new javax.swing.JLabel();
         messageErreur = new javax.swing.JLabel();
+        msgDureeFormation = new javax.swing.JLabel();
+        msgDureeSeanceFormation = new javax.swing.JLabel();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -85,10 +89,12 @@ public class JTableCreaModule extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTableFormation);
         if (jTableFormation.getColumnModel().getColumnCount() > 0) {
             jTableFormation.getColumnModel().getColumn(0).setResizable(false);
+            jTableFormation.getColumnModel().getColumn(1).setResizable(false);
             jTableFormation.getColumnModel().getColumn(2).setResizable(false);
             jTableFormation.getColumnModel().getColumn(3).setResizable(false);
         }
 
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 3, 24)); // NOI18N
         jLabel1.setText("       Creation des modules ");
         jLabel1.setMaximumSize(new java.awt.Dimension(165, 16));
 
@@ -100,7 +106,12 @@ public class JTableCreaModule extends javax.swing.JFrame {
 
         jLabel5.setText("Couleur");
 
-        comboFormation.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboFormation.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Aucune ", "LICENCE 3", " " }));
+        comboFormation.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboFormationItemStateChanged(evt);
+            }
+        });
 
         textModule.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,11 +167,21 @@ public class JTableCreaModule extends javax.swing.JFrame {
             }
         });
 
-        messageFormation.setForeground(new java.awt.Color(255, 51, 51));
-        messageFormation.setAlignmentX(10.0F);
+        msgNomFormation.setFont(new java.awt.Font("Lucida Grande", 3, 12)); // NOI18N
+        msgNomFormation.setForeground(new java.awt.Color(0, 0, 255));
+        msgNomFormation.setAlignmentX(10.0F);
 
+        messageErreur.setFont(new java.awt.Font("Lucida Grande", 3, 14)); // NOI18N
         messageErreur.setForeground(new java.awt.Color(255, 51, 51));
         messageErreur.setAlignmentX(10.0F);
+
+        msgDureeFormation.setFont(new java.awt.Font("Lucida Grande", 3, 12)); // NOI18N
+        msgDureeFormation.setForeground(new java.awt.Color(0, 0, 255));
+        msgDureeFormation.setAlignmentX(10.0F);
+
+        msgDureeSeanceFormation.setFont(new java.awt.Font("Lucida Grande", 3, 12)); // NOI18N
+        msgDureeSeanceFormation.setForeground(new java.awt.Color(0, 0, 255));
+        msgDureeSeanceFormation.setAlignmentX(10.0F);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -182,35 +203,35 @@ public class JTableCreaModule extends javax.swing.JFrame {
                             .addComponent(textModule, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(textAbbrev, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(textNbSeance)
-                            .addComponent(comboCouleur, 0, 103, Short.MAX_VALUE))
+                            .addComponent(comboCouleur, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(175, 175, 175))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(171, 171, 171)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(64, 64, 64)
-                                .addComponent(b_ajout, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(35, 35, 35)
-                                .addComponent(b_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
-                                .addComponent(b_update)
-                                .addGap(18, 18, 18)
-                                .addComponent(b_sauve, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(64, 64, 64)
+                        .addComponent(b_ajout, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(b_delete, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(b_update)
+                        .addGap(18, 18, 18)
+                        .addComponent(b_sauve, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(0, 88, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(111, 111, 111)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(msgDureeFormation, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(msgDureeSeanceFormation, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(msgNomFormation, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(119, 119, 119)
-                        .addComponent(messageFormation, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(200, 200, 200)
-                        .addComponent(messageErreur, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(163, 163, 163)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(messageErreur, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -218,7 +239,7 @@ public class JTableCreaModule extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(comboFormation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -245,12 +266,16 @@ public class JTableCreaModule extends javax.swing.JFrame {
                     .addComponent(b_update)
                     .addComponent(b_sauve))
                 .addGap(18, 18, 18)
-                .addComponent(messageFormation, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(msgNomFormation, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(msgDureeSeanceFormation, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(msgDureeFormation, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(messageErreur, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
+                .addGap(66, 66, 66))
         );
 
         pack();
@@ -263,17 +288,47 @@ public class JTableCreaModule extends javax.swing.JFrame {
     private void textModuleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textModuleActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_textModuleActionPerformed
-
+    
     private void b_ajoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_ajoutActionPerformed
         // Procédure d'ajout les lignes de Modules à la formation (Fenetre Creation des modules)
         //A COMPLETER POUR LES AUTRES ELEMENTS 
         messageErreur.setText("");//Vider le label Message
         DefaultTableModel model = (DefaultTableModel) jTableFormation.getModel();
-        if(!textModule.getText().trim().equals("")){
+        if(comboFormation.getSelectedItem().toString().equals("LICENCE 3")){
+            Formation licence3 = Insert.Inserer();
+        if(!textModule.getText().trim().equals("") && !textAbbrev.getText().trim().equals("") && !textNbSeance.getText().trim().equals("")){
+        if(licence3.testNom(textModule.getText()) == 0){
+        if(licence3.testAbbrev(textAbbrev.getText()) == 0){
+        if(licence3.testCouleur(comboCouleur.getSelectedItem().toString()) == 0 ){
         model.addRow(new Object[]{textModule.getText(),textAbbrev.getText(),comboCouleur.getSelectedItem().toString(),textNbSeance.getText() });
+        Module module;
+        module = new Module(textModule.getText(),textAbbrev.getText(),comboCouleur.getSelectedItem().toString(),Integer.parseInt(textNbSeance.getText()));
+        ModuleFormation module_Formation = new ModuleFormation(module);
+        licence3.getTabModule().add(module_Formation);
+        licence3 = Insert.InserModule(module_Formation);
+        messageErreur.setText("Ajout du module "+ textModule.getText() +" a été bien effectué");
+        
+        }else{
+            messageErreur.setText("WARNING! cette couleur existe déja");
+        }
+        
+        }else{
+            messageErreur.setText("WARNING! cette abbreviation existe déja");
+        }
+        
+        
+        }else{
+             messageErreur.setText("WARNING! ce nom existe déja");
+        }
+        
+        
+        
         }else {
-            messageErreur.setText("WARNING! Veuillez rentrer un nom de module (min 4 caractères)");
+            messageErreur.setText("WARNING! Veuillez rentrer tous les champs pour pouvoir ajouter un nouveau module");
             
+        }
+        }else{
+            messageErreur.setText("WARNING! Veuillez choisir la formation");
         }
     }//GEN-LAST:event_b_ajoutActionPerformed
 
@@ -296,7 +351,8 @@ public class JTableCreaModule extends javax.swing.JFrame {
 
     private void b_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b_updateActionPerformed
         // Procédure pour mettre à jour un module 
-        
+        if(comboFormation.getSelectedItem().toString().equals("LICENCE 3")){
+            Formation licence3 = Insert.Inserer();
         messageErreur.setText("");//Vider le label Message
         DefaultTableModel model = (DefaultTableModel) jTableFormation.getModel();
         if(jTableFormation.getSelectedRow() == -1 ){
@@ -306,10 +362,30 @@ public class JTableCreaModule extends javax.swing.JFrame {
                  messageErreur.setText("WARNING UPDATE! Vous devez selectionner au moin une ligne ");
             }
         }else {
+            if(!textModule.getText().trim().equals("") && !textAbbrev.getText().trim().equals("") && !textNbSeance.getText().trim().equals("")){
+        if(licence3.testUpdateNom(model.getValueAt(jTableFormation.getSelectedRow(),0).toString(),textModule.getText()) == 0){
+        if(licence3.testUpdateAbbrev(model.getValueAt(jTableFormation.getSelectedRow(),0).toString(),textAbbrev.getText()) == 0){      
+        if(licence3.testUpdateCouleur(model.getValueAt(jTableFormation.getSelectedRow(),0).toString(),comboCouleur.getSelectedItem().toString()) == 0 ){       
         model.setValueAt(textModule.getText(), jTableFormation.getSelectedRow(), 0);
         model.setValueAt(textAbbrev.getText(), jTableFormation.getSelectedRow(), 1);
         model.setValueAt(comboCouleur.getSelectedItem().toString(), jTableFormation.getSelectedRow(), 2);
         model.setValueAt(textNbSeance.getText(), jTableFormation.getSelectedRow(), 3);
+       }else{
+            messageErreur.setText("WARNING! cette couleur existe déja");
+        }
+        
+        }else{
+            messageErreur.setText("WARNING! cette abbreviation existe déja");
+        }
+        
+        
+        }else{
+             messageErreur.setText("WARNING! ce nom existe déja");
+        }
+       }else {
+                 messageErreur.setText("WARNING UPDATE! le champs vide n'est pas accepté ");
+            }
+        }
         }
     }//GEN-LAST:event_b_updateActionPerformed
 
@@ -332,7 +408,40 @@ public class JTableCreaModule extends javax.swing.JFrame {
         comboCouleur.setSelectedItem(model.getValueAt(jTableFormation.getSelectedRow(),2).toString());
         textNbSeance.setText(model.getValueAt(jTableFormation.getSelectedRow(),3).toString());
     }//GEN-LAST:event_jTableFormationMouseClicked
-
+// Choix de la formation 
+    private void comboFormationItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboFormationItemStateChanged
+           msgNomFormation.setText("");
+            msgDureeSeanceFormation.setText("");
+            msgDureeFormation.setText("");
+            
+            
+            DefaultTableModel model = (DefaultTableModel) jTableFormation.getModel();
+            deleteAllRows(model);
+         //DefaultTableModel model = (DefaultTableModel) jTableFormation.getModel();
+          
+         if(comboFormation.getSelectedItem().toString().equals("LICENCE 3")){
+           
+            Formation licence3 = Insert.Inserer();
+            msgNomFormation.setText("La Formation : "+licence3.getNom());
+            double duree = licence3.getDureeSeance();
+            int dureeInt = (int) duree;
+            msgDureeSeanceFormation.setText("Durée type d'une seance : "+dureeInt+" heurs.");
+            msgDureeFormation.setText(licence3.afficherDureeFormation(licence3.DureeFormation()));
+        
+         for (int i = 0;i< licence3.getTabModule().size();i++){
+             
+         Module module = licence3.getTabModule().get(i).getModule();
+         
+         model.addRow(new Object[]{module.getNom(),module.getAbbrev(),module.getCouleur(),module.getNbSeance()});
+         
+         }
+         }
+    }//GEN-LAST:event_comboFormationItemStateChanged
+    public static void deleteAllRows(final DefaultTableModel model) {
+    for( int i = model.getRowCount() - 1; i >= 0; i-- ) {
+        model.removeRow(i);
+    }
+}
     /**
      * @param args the command line arguments
      */
@@ -385,7 +494,9 @@ public class JTableCreaModule extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableFormation;
     private javax.swing.JLabel messageErreur;
-    private javax.swing.JLabel messageFormation;
+    private javax.swing.JLabel msgDureeFormation;
+    private javax.swing.JLabel msgDureeSeanceFormation;
+    private javax.swing.JLabel msgNomFormation;
     private javax.swing.JTextField textAbbrev;
     private javax.swing.JTextField textModule;
     private javax.swing.JTextField textNbSeance;

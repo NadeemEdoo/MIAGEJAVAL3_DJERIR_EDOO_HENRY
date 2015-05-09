@@ -1,4 +1,4 @@
-package ForMod;
+package Modele.ForMod;
 
 
 public class ModuleFormation {

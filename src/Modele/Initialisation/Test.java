@@ -1,5 +1,5 @@
-package source;
-import ForMod.*;
+package Modele.Initialisation;
+import Modele.ForMod.*;;
 import java.util.*;
 
 
@@ -26,6 +26,7 @@ public class Test {
 
 	        if (str == 1){
 	        	formation.afficherFormation();
+	        	
 	        	System.out.println("\n---------------------------------------------------------------------------------------------------------");
 	        }
 	        if(str == 2){
@@ -79,11 +80,11 @@ public class Test {
 	       	Scanner sc4 = new Scanner(System.in);
 	         String abbrev = sc4.nextLine();
 	         
-	         while(formation.testAbbrev(abbrev) == 0)
+	         while(formation.testAbbrev(abbrev) != 0)
 		 	    {
-		 	        	  System.out.println("cette abrdev  existe déja ! Veuillez saisir une nouvelle abbreviation  ");
+		 	        	 System.out.println("cette abrdev  existe déja ! Veuillez saisir une nouvelle abbreviation  ");
 		 	        	 Scanner sc8 = new Scanner(System.in);
-		 	        	abbrev = sc8.nextLine();
+		 	        	 abbrev = sc8.nextLine();
 		 	        }
 	         
 	       	  System.out.println("la Couleur ");

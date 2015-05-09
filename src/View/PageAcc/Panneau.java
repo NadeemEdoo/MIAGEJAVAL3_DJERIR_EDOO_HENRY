@@ -1,4 +1,4 @@
-package PageAcc;
+package View.PageAcc;
 
 import java.awt.Color;
 import java.awt.Dimension;

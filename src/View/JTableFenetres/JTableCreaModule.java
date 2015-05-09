@@ -95,7 +95,7 @@ public class JTableCreaModule extends javax.swing.JFrame {
         }
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 3, 24)); // NOI18N
-        jLabel1.setText("       Creation des modules ");
+        jLabel1.setText("       Choix des modules ");
         jLabel1.setMaximumSize(new java.awt.Dimension(165, 16));
 
         jLabel2.setText("Formation");
@@ -306,29 +306,29 @@ public class JTableCreaModule extends javax.swing.JFrame {
         ModuleFormation module_Formation = new ModuleFormation(module);
         licence3.getTabModule().add(module_Formation);
         licence3 = Insert.InserModule(module_Formation);
-        messageErreur.setText("Ajout du module "+ textModule.getText() +" a été bien effectué");
+        messageErreur.setText("L'ajout du module "+ textModule.getText() +" a bien été effectué");
         
         }else{
-            messageErreur.setText("WARNING! cette couleur existe déja");
+            messageErreur.setText("WARNING CHOIX COULEUR! cette couleur existe déja");
         }
         
         }else{
-            messageErreur.setText("WARNING! cette abbreviation existe déja");
+            messageErreur.setText("WARNING CHOIX ABBREVIATION! Cette abbréviation existe déja");
         }
         
         
         }else{
-             messageErreur.setText("WARNING! ce nom existe déja");
+             messageErreur.setText("WARNING CHOIX NOM! Ce nom existe déja");
         }
         
         
         
         }else {
-            messageErreur.setText("WARNING! Veuillez rentrer tous les champs pour pouvoir ajouter un nouveau module");
+            messageErreur.setText("WARNING CHAMPS VIDES! Veuillez remplier tous les champs pour pouvoir ajouter un nouveau module");
             
         }
         }else{
-            messageErreur.setText("WARNING! Veuillez choisir la formation");
+            messageErreur.setText("WARNING CHOIX FORMATION! Veuillez choisir la formation");
         }
     }//GEN-LAST:event_b_ajoutActionPerformed
 
@@ -341,7 +341,7 @@ public class JTableCreaModule extends javax.swing.JFrame {
             if(jTableFormation.getRowCount() == 0){
                 messageErreur.setText("WARNING DELETE! La table est vide");
             }else {
-                 messageErreur.setText("WARNING DELETE! Vous devez selectionner au moin une ligne ");
+                 messageErreur.setText("WARNING DELETE! Vous devez selectionner au moins une ligne ");
             }
         }else {
         model.removeRow(jTableFormation.getSelectedRow());
@@ -359,7 +359,7 @@ public class JTableCreaModule extends javax.swing.JFrame {
             if(jTableFormation.getRowCount() == 0){
                 messageErreur.setText("WARNING UPDATE! La table est vide");
             }else {
-                 messageErreur.setText("WARNING UPDATE! Vous devez selectionner au moin une ligne ");
+                 messageErreur.setText("WARNING UPDATE! Vous devez selectionner au moins une ligne ");
             }
         }else {
             if(!textModule.getText().trim().equals("") && !textAbbrev.getText().trim().equals("") && !textNbSeance.getText().trim().equals("")){
@@ -371,19 +371,19 @@ public class JTableCreaModule extends javax.swing.JFrame {
         model.setValueAt(comboCouleur.getSelectedItem().toString(), jTableFormation.getSelectedRow(), 2);
         model.setValueAt(textNbSeance.getText(), jTableFormation.getSelectedRow(), 3);
        }else{
-            messageErreur.setText("WARNING! cette couleur existe déja");
+            messageErreur.setText("WARNING CHOIX COULEUR! cette couleur existe déja");
         }
         
         }else{
-            messageErreur.setText("WARNING! cette abbreviation existe déja");
+            messageErreur.setText("WARNING CHOIX ABBREVIATION! cette abbreviation existe déja");
         }
         
         
         }else{
-             messageErreur.setText("WARNING! ce nom existe déja");
+             messageErreur.setText("WARNING CHOIX NOM! Ce nom existe déja");
         }
        }else {
-                 messageErreur.setText("WARNING UPDATE! le champs vide n'est pas accepté ");
+                 messageErreur.setText("WARNING UPDATE! Veuillez remplir tous les champs ");
             }
         }
         }
@@ -425,7 +425,7 @@ public class JTableCreaModule extends javax.swing.JFrame {
             msgNomFormation.setText("La Formation : "+licence3.getNom());
             double duree = licence3.getDureeSeance();
             int dureeInt = (int) duree;
-            msgDureeSeanceFormation.setText("Durée type d'une seance : "+dureeInt+" heurs.");
+            msgDureeSeanceFormation.setText("Durée type d'une seance : "+dureeInt+"h");
             msgDureeFormation.setText(licence3.afficherDureeFormation(licence3.DureeFormation()));
         
          for (int i = 0;i< licence3.getTabModule().size();i++){

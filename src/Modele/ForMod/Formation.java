@@ -204,7 +204,7 @@ import java.util.ArrayList;
         public String afficherDureeFormation(int dureeFormation){
             String msgDureeFormation ;
             if (NbHeureFormation(dureeFormation) != 0 ){
-                msgDureeFormation= " Durée de la formation : "+NbJourFormation(DureeFormation())+" jours et "+NbHeureFormation(DureeFormation())+" Heures.";
+                msgDureeFormation= " Durée de la formation : "+NbJourFormation(DureeFormation())+" jours et "+NbHeureFormation(DureeFormation())+" h.";
 		}else{
 			msgDureeFormation=(" Durée de la formation : "+NbJourFormation(DureeFormation())+" jours.");
 		}

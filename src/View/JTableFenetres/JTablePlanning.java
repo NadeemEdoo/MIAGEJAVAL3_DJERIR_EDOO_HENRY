@@ -14,12 +14,12 @@ import java.util.GregorianCalendar;
  *
  * @author wafadjerir
  */
-public class JTablePlannig extends javax.swing.JFrame {
+public class JTablePlanning extends javax.swing.JFrame {
 
     /**
      * Creates new form JTablePlannig
      */
-    public JTablePlannig() {
+    public JTablePlanning() {
         initComponents();
     }
 
@@ -35,7 +35,7 @@ public class JTablePlannig extends javax.swing.JFrame {
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTablePlannig = new javax.swing.JTable();
+        jTablePlanning = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         bAvancer = new javax.swing.JButton();
@@ -53,11 +53,11 @@ public class JTablePlannig extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
-        jLabel1.setText("le Plannig");
+        jLabel1.setText("Le planning");
 
-        jTablePlannig.setBackground(new java.awt.Color(255, 204, 204));
-        jTablePlannig.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
-        jTablePlannig.setModel(new javax.swing.table.DefaultTableModel(
+        jTablePlanning.setBackground(new java.awt.Color(255, 204, 204));
+        jTablePlanning.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        jTablePlanning.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null}
@@ -74,8 +74,8 @@ public class JTablePlannig extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTablePlannig.setSize(new java.awt.Dimension(450, 100));
-        jScrollPane1.setViewportView(jTablePlannig);
+        jTablePlanning.setSize(new java.awt.Dimension(450, 100));
+        jScrollPane1.setViewportView(jTablePlanning);
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabel2.setText("Après Midi");
@@ -226,7 +226,7 @@ public class JTablePlannig extends javax.swing.JFrame {
             msgDureeFormation.setText("");
             
             
-            DefaultTableModel model = (DefaultTableModel) jTablePlannig.getModel();
+            DefaultTableModel model = (DefaultTableModel) jTablePlanning.getModel();
             deleteAllRows(model);
          //DefaultTableModel model = (DefaultTableModel) jTableFormation.getModel();
           
@@ -242,7 +242,7 @@ public class JTablePlannig extends javax.swing.JFrame {
     }//GEN-LAST:event_comboFormationItemStateChanged
 
     private void bActMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bActMouseClicked
-       DefaultTableModel model = (DefaultTableModel) jTablePlannig.getModel();
+       DefaultTableModel model = (DefaultTableModel) jTablePlanning.getModel();
        model.setValueAt(new Object[]{date.getDate()},0,3);
           // model.addRow(new Object[]{date.getDate()});
     }//GEN-LAST:event_bActMouseClicked
@@ -271,22 +271,23 @@ public class JTablePlannig extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JTablePlannig.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JTablePlanning.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JTablePlannig.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JTablePlanning.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JTablePlannig.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JTablePlanning.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JTablePlannig.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JTablePlanning.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                JTablePlannig jtable = new JTablePlannig();
+                JTablePlanning jtable = new JTablePlanning();
                 
-                jtable.jTablePlannig.setRowHeight(87);
+                jtable.jTablePlanning.setRowHeight(87);
                 jtable.setVisible(true);     
         
             }
@@ -306,7 +307,7 @@ public class JTablePlannig extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTablePlannig;
+    private javax.swing.JTable jTablePlanning;
     private javax.swing.JLabel messageErreur;
     private javax.swing.JLabel msgDureeFormation;
     private javax.swing.JLabel msgDureeSeance;

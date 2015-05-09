@@ -199,7 +199,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Lucida Grande" size="24" style="3"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="       Creation des modules "/>
+        <Property name="text" type="java.lang.String" value="       Choix des modules "/>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[165, 16]"/>
         </Property>

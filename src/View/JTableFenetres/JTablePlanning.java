@@ -8,6 +8,7 @@ package View.JTableFenetres;
 import javax.swing.table.DefaultTableModel;
 import Modele.ForMod.*;
 import Modele.Initialisation.*;
+import java.util.Date;
 import javax.swing.JTable;
 import java.util.GregorianCalendar;
 /**
@@ -242,9 +243,21 @@ public class JTablePlanning extends javax.swing.JFrame {
     }//GEN-LAST:event_comboFormationItemStateChanged
 
     private void bActMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bActMouseClicked
-       DefaultTableModel model = (DefaultTableModel) jTablePlanning.getModel();
-       model.setValueAt(new Object[]{date.getDate()},0,3);
-          // model.addRow(new Object[]{date.getDate()});
+      // DefaultTableModel model = (DefaultTableModel) jTablePlanning.getModel();
+     //  model.setValueAt(new Object[]{date.getDate()},0,3);
+          DefaultTableModel model = (DefaultTableModel) jTablePlanning.getModel();
+       messageErreur.setText("");//Vider le label Message
+       GregorianCalendar calendar =new GregorianCalendar();
+       Date laDate = date.getDate();
+       calendar.setTime(laDate);
+       int day =calendar.get(calendar.DAY_OF_WEEK);
+       
+       if (day == 1 || day == 7){//si le jour en question (laDate from jDateChooser1) est un jour ferier
+           messageErreur.setText("Il n'y a pas de cours les weekend, veuillez choisir un jour en semaine pour y ajouter le module.");
+       }else{
+           model.setValueAt(new Object[]{date.getDate()},0,3);
+           
+       }
     }//GEN-LAST:event_bActMouseClicked
         public static void deleteAllRows(final DefaultTableModel model) {
     for( int i = model.getRowCount() - 1; i >= 0; i-- ) {

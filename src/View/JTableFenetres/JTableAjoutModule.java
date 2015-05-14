@@ -4,19 +4,33 @@
  * and open the template in the editor.
  */
 package View.JTableFenetres;
+import Controller.Couleur;
 import Modele.ForMod.*;
 import Modele.Initialisation.*;
+import Controller.ConditionAjoutSeance;
+
+import java.awt.Component;
 import javax.swing.table.DefaultTableModel;
 import java.util.*;
+import java.awt.*;
+import javax.swing.*;
+import Modele.Calendrier.*;
+
+
 /**
  *
  * @author NadeemShia
  */
 public class JTableAjoutModule extends javax.swing.JFrame {
+//extends DefaultTableCellRenderer{
+//extends javax.swing.JFrame {
 
     /**
      * Creates new form JTableBis
      */
+    
+    
+    static Component  cell; 
     public JTableAjoutModule() {
         initComponents();
     }
@@ -48,6 +62,15 @@ public class JTableAjoutModule extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         msgErreur = new javax.swing.JLabel();
         date = new com.toedter.calendar.JDateChooser();
+        dateLundi = new javax.swing.JLabel();
+        dateVendredi = new javax.swing.JLabel();
+        dateMercredi = new javax.swing.JLabel();
+        dateMardi = new javax.swing.JLabel();
+        dateSamedi = new javax.swing.JLabel();
+        dateDimanche = new javax.swing.JLabel();
+        dateJeudi = new javax.swing.JLabel();
+        bPrec = new javax.swing.JButton();
+        bSuiv = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -132,10 +155,19 @@ public class JTableAjoutModule extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tableauSemaine.setColumnSelectionAllowed(true);
         tableauSemaine.setCursor(new java.awt.Cursor(java.awt.Cursor.WAIT_CURSOR));
+        tableauSemaine.setGridColor(new java.awt.Color(0, 0, 0));
         tableauSemaine.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tableauSemaine);
+        if (tableauSemaine.getColumnModel().getColumnCount() > 0) {
+            tableauSemaine.getColumnModel().getColumn(0).setResizable(false);
+            tableauSemaine.getColumnModel().getColumn(1).setResizable(false);
+            tableauSemaine.getColumnModel().getColumn(2).setResizable(false);
+            tableauSemaine.getColumnModel().getColumn(3).setResizable(false);
+            tableauSemaine.getColumnModel().getColumn(4).setResizable(false);
+            tableauSemaine.getColumnModel().getColumn(5).setResizable(false);
+            tableauSemaine.getColumnModel().getColumn(6).setResizable(false);
+        }
 
         jLabel3.setText("Formation");
 
@@ -148,45 +180,66 @@ public class JTableAjoutModule extends javax.swing.JFrame {
         msgErreur.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         msgErreur.setForeground(new java.awt.Color(255, 51, 51));
 
+        date.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                dateMousePressed(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                dateMouseEntered(evt);
+            }
+        });
+
+        bPrec.setText("Précendente");
+        bPrec.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bPrecMouseClicked(evt);
+            }
+        });
+
+        bSuiv.setText("Suivante");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(120, 120, 120)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(63, 63, 63)
-                                .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(b_ajout)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                                .addGap(48, 48, 48)
                                 .addComponent(b_delete)
-                                .addGap(95, 95, 95)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(comboH, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39)
+                                .addComponent(b_update)))
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(b_update)
-                                .addGap(52, 52, 52)
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(comboH, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
                                 .addComponent(b_save)
-                                .addGap(86, 86, 86))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(bPrec))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(36, 36, 36)
                         .addComponent(comboFormation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(32, 32, 32)
-                                .addComponent(comboNomModule, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(139, 139, 139))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(267, 267, 267)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboNomModule, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(bSuiv)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
@@ -195,17 +248,37 @@ public class JTableAjoutModule extends javax.swing.JFrame {
                         .addGap(16, 16, 16)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(230, 230, 230)
-                        .addComponent(msgErreur, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(404, 404, 404)
-                        .addComponent(TitreFenetre)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(448, 448, 448)
+                                        .addComponent(TitreFenetre))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(231, 231, 231)
+                                        .addComponent(msgErreur, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(dateLundi, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(49, 49, 49)
+                                .addComponent(dateMardi, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(35, 35, 35)
+                                .addComponent(dateMercredi, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                                .addComponent(dateJeudi, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(45, 45, 45)
+                                .addComponent(dateVendredi, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(39, 39, 39)))
+                        .addComponent(dateSamedi, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(dateDimanche, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -231,19 +304,32 @@ public class JTableAjoutModule extends javax.swing.JFrame {
                     .addComponent(b_ajout)
                     .addComponent(b_delete)
                     .addComponent(b_update)
-                    .addComponent(b_save))
+                    .addComponent(b_save)
+                    .addComponent(bPrec)
+                    .addComponent(bSuiv))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(74, 74, 74)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(77, 77, 77)
-                        .addComponent(jLabel6)))
-                .addGap(30, 30, 30)
+                        .addComponent(jLabel6))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(dateLundi, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dateMardi, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dateMercredi, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(dateSamedi)
+                        .addComponent(dateDimanche)
+                        .addComponent(dateVendredi, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dateJeudi))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
                 .addComponent(msgErreur, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -270,6 +356,11 @@ public class JTableAjoutModule extends javax.swing.JFrame {
     }//GEN-LAST:event_comboNomModuleMouseClicked
 
     private void comboFormationItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboFormationItemStateChanged
+        DefaultTableModel model = (DefaultTableModel) tableauSemaine.getModel();
+        model.setValueAt(Color.gray, 1,6);
+         model.setValueAt(Color.gray, 0,6);
+        model.setValueAt(Color.gray, 1,5);
+          model.setValueAt(Color.gray, 0,5);
         msgErreur.setText("");
         comboNomModule.removeAllItems();
         if(comboFormation.getSelectedItem().toString().equals("Licence 3")){
@@ -290,40 +381,164 @@ public class JTableAjoutModule extends javax.swing.JFrame {
     }//GEN-LAST:event_comboHActionPerformed
 
     private void b_ajoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_b_ajoutMouseClicked
-          DefaultTableModel model = (DefaultTableModel) tableauSemaine.getModel();
-          GregorianCalendar calendar = new GregorianCalendar();
+        String abb="";
+        Date lundi,mardi,mercredi,jeudi,vendredi,samedi,dimanche;
+     // Component  cell; 
+        DefaultTableModel model = (DefaultTableModel) tableauSemaine.getModel();
+//       model.setValueAt(Color.gray, 1,6);
+//        model.setValueAt(Color.gray, 0,6);
+//        model.setValueAt(Color.gray, 1,5);
+//        model.setValueAt(Color.gray, 0,5);
+//        lundi = Semaine.RecLundi(date.getDate());
+//         dateLundi.setText(lundi.toLocaleString());
+        
+      
+             //tableauSemaine.setDefaultRenderer(Color.class, new Couleur());
+            // cell = Couleur.TableCellRendererComponent(tableauSemaine,"r", false , false, 0, 6);
+         if(comboFormation.getSelectedItem().toString().equals("Licence 3")){
+              GregorianCalendar calendar = new GregorianCalendar();
               calendar.setTime(date.getDate());
               int jour;
               jour = calendar.get(Calendar.DAY_OF_WEEK);
-          
+              lundi = Semaine.RecLundi(date.getDate());
+              mardi = Semaine.RecDemain(lundi);
+              mercredi = Semaine.RecDemain(mardi);
+              jeudi = Semaine.RecDemain(mercredi);
+              vendredi = Semaine.RecDemain(jeudi);
+              samedi = Semaine.RecDemain(vendredi);
+              dimanche = Semaine.RecDemain(samedi);
+                dateLundi.setText(lundi.toLocaleString());
+                dateMardi.setText(Semaine.RecDemain(lundi).toLocaleString());
+                dateMercredi.setText(Semaine.RecDemain(mardi).toLocaleString());
+                dateJeudi.setText(Semaine.RecDemain(mercredi).toLocaleString());
+                dateVendredi.setText(Semaine.RecDemain(jeudi).toLocaleString());
+                dateSamedi.setText(Semaine.RecDemain(vendredi).toLocaleString());
+                dateDimanche.setText(Semaine.RecDemain(samedi).toLocaleString());
+                
+                
+              if (jour == 1 || jour == 7){//si le jour en question (laDate from jDateChooser1) est un jour ferier
+           msgErreur.setText("Il n'y a pas de cours les weekend, veuillez choisir un jour en semaine pour y ajouter le module.");}
+              else{
+             Formation licence3;
+           
+            licence3 = Insert.Inserer();
+       //   abb = ConditionAjoutSeance.abbSeance(licence3,comboNomModule.getSelectedItem().toString());
          if(comboH.getSelectedItem().equals("Matin")){
            
              switch (jour)
             {
-            case 1: model.setValueAt(comboNomModule.getSelectedItem(), 0,6);break; 
-            case 2: model.setValueAt(comboNomModule.getSelectedItem(), 0,0);break;
-            case 3: model.setValueAt(comboNomModule.getSelectedItem(), 0,1);break;
-            case 4: model.setValueAt(comboNomModule.getSelectedItem(), 0,2);break;
-            case 5: model.setValueAt(comboNomModule.getSelectedItem(), 0,3);break;
-            case 6: model.setValueAt(comboNomModule.getSelectedItem(), 0,4);break;
-            case 7: model.setValueAt(comboNomModule.getSelectedItem(), 0,5);break;           
+                 
+            case 1: model.setValueAt(abb, 0,6);break; 
+               
+            case 2:   
+                //Object obj = Couleur.setFormation(tableauSemaine,abb,2,2,abb);
+                //seance.setBackground(Color.red);
+                //tableauSemaine.setFont(new java.awt.Font("Lucida Grande",2,18));
+               // tableauSemaine.setForeground(Color.red);
+               
+               model.setValueAt(Color.BLUE, 0,0);
+                //model.setValueAt("rouge", 0,0);
+//                tableauSemaine.setDefaultRenderer(Object.class, new Couleur());
+                //model.setValueAt("rouge", 0,0);
+
+                
+            
+            //tableauSemaine.setDefaultRenderer(Color.class, new Couleur());
+            break;
+              
+            case 3: model.setValueAt(abb, 0,1);
+             //tableauSemaine.setForeground(Color.blue);
+            
+           
+            //tableauSemaine.setDefaultRenderer(Color.class, new Couleur());
+            break;
+            case 4: model.setValueAt(abb, 0,2);break;
+            case 5: model.setValueAt(abb, 0,3);break;
+            case 6: model.setValueAt(abb, 0,4);break;
+            case 7: model.setValueAt(abb, 0,5);break;           
             }
             
          }else{
              switch (jour)
             {
-            case 1: model.setValueAt(comboNomModule.getSelectedItem(), 1,6);break; 
-            case 2: model.setValueAt(comboNomModule.getSelectedItem(), 1,0);break;
-            case 3: model.setValueAt(comboNomModule.getSelectedItem(), 1,1);break;
-            case 4: model.setValueAt(comboNomModule.getSelectedItem(), 1,2);break;
-            case 5: model.setValueAt(comboNomModule.getSelectedItem(), 1,3);break;
-            case 6: model.setValueAt(comboNomModule.getSelectedItem(), 1,4);break;
-            case 7: model.setValueAt(comboNomModule.getSelectedItem(), 1,5);break;           
+            case 1: model.setValueAt(abb, 1,6);break; 
+            case 2: model.setValueAt(abb, 1,0);break;
+            case 3: model.setValueAt(abb, 1,1);break;
+            case 4: model.setValueAt(abb, 1,2);break;
+            case 5: model.setValueAt(abb, 1,3);break;
+            case 6: model.setValueAt(abb, 1,4);break;
+            case 7: model.setValueAt(abb, 1,5);break;           
             }
              
          }
+         }
+         }
+         else
+            msgErreur.setText("Veuillez choisir une formation");
+              
     }//GEN-LAST:event_b_ajoutMouseClicked
 
+    private void dateMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dateMousePressed
+        // TODO add your handling code here:
+//        Date lundi;
+//         DefaultTableModel model = (DefaultTableModel) tableauSemaine.getModel();
+//         model.setValueAt(Color.gray, 1,6);
+//         model.setValueAt(Color.gray, 0,6);
+//         model.setValueAt(Color.gray, 1,5);
+//         model.setValueAt(Color.gray, 0,5);
+//         
+//         
+//         lundi = Semaine.RecLundi(date.getDate());
+//         dateLundi.setText(lundi.toLocaleString());
+    }//GEN-LAST:event_dateMousePressed
+
+    private void dateMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dateMouseEntered
+        // TODO add your handling code here:
+//         Date lundi;
+//         DefaultTableModel model = (DefaultTableModel) tableauSemaine.getModel();
+//         model.setValueAt(Color.gray, 1,6);
+//         model.setValueAt(Color.gray, 0,6);
+//         model.setValueAt(Color.gray, 1,5);
+//         model.setValueAt(Color.gray, 0,5);
+//         
+//         
+//         lundi = Semaine.RecLundi(date.getDate());
+//         dateLundi.setText(lundi.toLocaleString());
+    }//GEN-LAST:event_dateMouseEntered
+
+    private void bPrecMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bPrecMouseClicked
+        // TODO add your handling code here:
+        Date lundi,mardi,mercredi,jeudi,vendredi,samedi,dimanche;
+//         GregorianCalendar calendar = new GregorianCalendar();
+//              calendar.setTime(date.getDate());
+//              int jour;
+//              jour = calendar.get(Calendar.DAY_OF_WEEK);
+              lundi = Semaine.RecLundiPreced(date.getDate());
+              mardi = Semaine.RecDemain(lundi);
+              mercredi = Semaine.RecDemain(mardi);
+              jeudi = Semaine.RecDemain(mercredi);
+              vendredi = Semaine.RecDemain(jeudi);
+              samedi = Semaine.RecDemain(vendredi);
+              dimanche = Semaine.RecDemain(samedi);
+                dateLundi.setText(lundi.toLocaleString());
+                dateMardi.setText(Semaine.RecDemain(lundi).toLocaleString());
+                dateMercredi.setText(Semaine.RecDemain(mardi).toLocaleString());
+                dateJeudi.setText(Semaine.RecDemain(mercredi).toLocaleString());
+                dateVendredi.setText(Semaine.RecDemain(jeudi).toLocaleString());
+                dateSamedi.setText(Semaine.RecDemain(vendredi).toLocaleString());
+                dateDimanche.setText(Semaine.RecDemain(samedi).toLocaleString());
+        
+    }//GEN-LAST:event_bPrecMouseClicked
+
+  
+
+     
+     
+    
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -356,16 +571,25 @@ public class JTableAjoutModule extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 //new JTableAjoutModule().setVisible(true);
+                
                 JTableAjoutModule jtable = new JTableAjoutModule();
                 
                 jtable.tableauSemaine.setRowHeight(96);
-                jtable.setVisible(true);  
+                jtable.tableauSemaine.setDefaultRenderer(Object.class,new Couleur());
+          
+                //jtable.tableauSemaine.setGridColor(Color.RED);
+                //jtable.tableauSemaine.setBackground(Color.BLACK);
+               //jtable.tableauSemaine.setDefaultRenderer(Color.class, new Couleur());
+                jtable.setVisible(true); 
+                
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel TitreFenetre;
+    private javax.swing.JButton bPrec;
+    private javax.swing.JButton bSuiv;
     private javax.swing.JButton b_ajout;
     private javax.swing.JButton b_delete;
     private javax.swing.JButton b_save;
@@ -374,6 +598,13 @@ public class JTableAjoutModule extends javax.swing.JFrame {
     private javax.swing.JComboBox comboH;
     private javax.swing.JComboBox comboNomModule;
     private com.toedter.calendar.JDateChooser date;
+    private javax.swing.JLabel dateDimanche;
+    private javax.swing.JLabel dateJeudi;
+    private javax.swing.JLabel dateLundi;
+    private javax.swing.JLabel dateMardi;
+    private javax.swing.JLabel dateMercredi;
+    private javax.swing.JLabel dateSamedi;
+    private javax.swing.JLabel dateVendredi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

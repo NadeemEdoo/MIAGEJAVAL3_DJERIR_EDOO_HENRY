@@ -19,61 +19,49 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import java.awt.event.*;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileSystemView;
 
-public class MyFrame extends JFrame {
+import View.JTableFenetres.*;
+import javax.swing.JOptionPane;
+
+public class MyFrame extends JFrame{
 	
 	
-		private int longueur = 900;
-		private int hauteur = 600;
-                
+                private int longueur = 1100;
+                private int hauteur = 700;
                 //Titre des Bouttons
-                private String create = "Menu creation de CALENDRIER";
-                private String view = "Menu aperçu de CALENDRIER";
-                private String gestion = "Menu gestion de FORMATION"; 
-		
+                private String create = "<html>Menu de mise à jour de <b>SEANCES</b></html>";
+                private String view = "<html>Menu d'affichage de <b>PLANNING</b></html>";
+                private String gestion = "<html>Menu gestion de <b>SEANCES</b> <br>(Ajout, Suppression, mise à jour)</br></html>"; 
+                
 	public MyFrame() {
-		
-			
+	
 		this.setTitle("Fenetre Page d'Accueil");
 		this.setResizable(false);
 		
 		this.setSize(longueur,hauteur);
 		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 				
-		//.. En-T�TE POSITION n�1
-			/*	JPanel enTete = new JPanel();
-				enTete.setLayout(new FlowLayout());
-				
-				JLabel titre = new JLabel("PRO CALENDAR 2015");
-				enTete.add(titre);
-				enTete.setBackground(Color.black);
-				enTete.setPreferredSize(new Dimension(100, 700-500));*/
+		//.. En-TeTE POSITION n1
 		
 				Panneau enTete = new Panneau("PRO CALENDAR 2015",0,330,35);
 				enTete.setBackground(Color.black);
-				enTete.setPreferredSize(new Dimension(100,hauteur-600));
-								
+				enTete.setPreferredSize(new Dimension(100,hauteur-600));						
 		
-		//.. MENU POSTION n�2 GRIDBAGLAYOUT
+		//.. MENU POSTION n2 GRIDBAGLAYOUT
 				JPanel menu = new JPanel();
 				menu.setLayout(new GridBagLayout());
 				
 				//menu.setBackground(Color.GRAY);	
 				menu.setBorder(BorderFactory.createLineBorder(Color.RED,3));
 				menu.setPreferredSize(new Dimension(longueur,hauteur-350));
-                               
-                               /*TEST1 ICONBUTTON
-                                Icon warnIcon = new ImageIcon("PicNewDossier.png");
-                                 JButton b_create = new JButton(warnIcon);*/
+    
                              //.. CREATION des BOUTONS   
                              JButton b_create = new JButton();
                                 b_create.setToolTipText(create);
                              try {
                                      Image img = ImageIO.read(new File("PicNewDossier.png")); 
-                                     Image newimg = img.getScaledInstance( 60, 50,  java.awt.Image.SCALE_SMOOTH );
+                                     Image newimg = img.getScaledInstance( 120, 100,  java.awt.Image.SCALE_SMOOTH );
                                      b_create.setIcon(new ImageIcon(newimg));
                                      b_create.setBorder(BorderFactory.createEmptyBorder());
                                    //  b_create.setContentAreaFilled(false);
@@ -83,6 +71,7 @@ public class MyFrame extends JFrame {
                              //...CLASS ANONYME INTERNE
 				public void mouseClicked(MouseEvent event){ 
 					System.out.println("Un clic sur le bouton " + create);
+                                        clickCrea();
 					};
 					
                              });
@@ -91,11 +80,57 @@ public class MyFrame extends JFrame {
                                 b_view.setToolTipText(view);
                               try {
                                      Image img = ImageIO.read(new File("Calendrier.png")); 
-                                     Image newimg = img.getScaledInstance( 60, 50,  java.awt.Image.SCALE_SMOOTH );
+                                     Image newimg = img.getScaledInstance( 120, 100,  java.awt.Image.SCALE_SMOOTH );
                                      b_view.setIcon(new ImageIcon(newimg));
                                      b_view.setBorder(BorderFactory.createEmptyBorder());
                                      } catch (IOException ex) {
                                          ex.printStackTrace(); }
+                              b_view.addMouseListener(new MouseAdapter() {
+                                    public void mouseClicked(MouseEvent event){ 
+					System.out.println("Un clic sur le bouton " + view);
+                                        
+                                        JTablePlanning test_lancementPlanning = new JTablePlanning();
+                                        test_lancementPlanning.setVisible(true);
+                                        test_lancementPlanning.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                                    };
+                              });
+                              
+                              /*VERSION NE FONCTIONNANT PAS (Action de placer FRAME principale invisible)
+                              b_view.addMouseListener(new MouseAdapter() {
+                                  //  public void mouseClicked(MouseEvent event){ 
+					//System.out.println("Un clic sur le bouton " + view);
+                                        
+                                   //     JTablePlanning test_lancementPlanning = new JTablePlanning();
+                                   //     test_lancementPlanning.setVisible(true);
+                                   //     test_lancementPlanning.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                                        
+                                 //   };
+                                  //Pour comptabiliser le nombre de fenetres ouvertes 
+                                 private JTablePlanning  buttonFrame = null;  
+                                 
+                                 public void MouseClicked(MouseAdapter e){
+                                     System.out.println("Un clic sur le bouton " + view);
+                                     if(buttonFrame == null) {
+                                         buttonFrame = new JTablePlanning();
+                                       //  buttonFrame.setVisible(true);
+                                         buttonFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                                         buttonFrame.addWindowListener(new WindowAdapter() {
+						public void windowClosed(java.awt.event.WindowEvent e) {        
+                                                          //permet de ré-ouvrir la fenêtre
+                                                          buttonFrame = null; };
+                                         });
+                                         buttonFrame.setVisible(true);
+                                     }else {
+                                        // Pour repositionner la fenêtre en état normal si elle a été réduite
+					if( buttonFrame.getState()==JFrame.ICONIFIED ) {
+						buttonFrame.setState(JFrame.NORMAL);}
+					// Pour repositionner la fenêtre au premier plan
+					buttonFrame.toFront(); }
+                                };                            
+                               });  
+
+                              /*  VERSION QUI FONCTIONNE POUR LA RECHERCHE DE FICHIERS
+                              
                               b_view.addMouseListener(new MouseAdapter() {
                              //...CLASS ANONYME INTERNE
 				public void mouseClicked(MouseEvent event){ 
@@ -108,24 +143,23 @@ public class MyFrame extends JFrame {
                                 JFileChooser defautChooser = new JFileChooser(defaut);
                                 defautChooser.showOpenDialog(null);
                               // VOIR REPERTOIRE "BUREAU"
-                              /*File home = vueSysteme.getHomeDirectory();   
-                                JFileChooser homeChooser = new JFileChooser(home);
-                                homeChooser.showOpenDialog(null);*/
+                            //  File home = vueSysteme.getHomeDirectory();   
+                          //      JFileChooser homeChooser = new JFileChooser(home);
+                         //       homeChooser.showOpenDialog(null);
                                 
                                 //VOIR tous les DISQUES 
-                                /*JFileChooser chooser = new JFileChooser();
-                                chooser.setCurrentDirectory(new File("/"));
-                                chooser.changeToParentDirectory();
-                                chooser.showOpenDialog(null);*/
+                                //   chooser.setCurrentDirectory(new File("/"));
+                                //   chooser.changeToParentDirectory();
+                                //   chooser.showOpenDialog(null);
                              
                                 };				
-                             });
+                             });*/
                                 
                              JButton b_form = new JButton ();
                                 b_form.setToolTipText(gestion);
                               try {
                                      Image img = ImageIO.read(new File("gestion.png")); 
-                                     Image newimg = img.getScaledInstance( 60, 50,  java.awt.Image.SCALE_SMOOTH );
+                                     Image newimg = img.getScaledInstance( 120, 100,  java.awt.Image.SCALE_SMOOTH );
                                      b_form.setIcon(new ImageIcon(newimg));
                                      b_form.setBorder(BorderFactory.createEmptyBorder());
                                      } catch (IOException ex) {
@@ -133,14 +167,16 @@ public class MyFrame extends JFrame {
                               b_form.addMouseListener(new MouseAdapter() {
                              //...CLASS ANONYME INTERNE
 				public void mouseClicked(MouseEvent event){ 
-					System.out.println("Un clic sur le bouton " + gestion);
-					};			
+					//System.out.println("Un clic sur le bouton " + gestion);
+					JTableAjoutModule test_lancementAjout = new JTableAjoutModule();
+                                        test_lancementAjout.setVisible(true);
+                                        test_lancementAjout.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                                    };			
                              });
                            
                             GridBagConstraints GBGC = new GridBagConstraints();
-                           // GBGC.weightx = 1;
-                            //GBGC.weighty = 1;
-                            GBGC.insets = new Insets(10, 10, 10, 10);
+                            //Espaces entre les boutons
+                            GBGC.insets = new Insets(20, 20, 20, 20);
                             //.. Position en x
                             GBGC.gridx = 0;
                             //.. Position en y
@@ -178,41 +214,48 @@ public class MyFrame extends JFrame {
 				 */
 
 		//.. BAS de PAGE POSITION n�3
-				/*
-				 * NE FONCTIONNE PAS 
-				 * Panneau bas = new Panneau("Copyright � 2015 DJERIR-EDOO-HENRY "
-						+ "and/or its affiliates. All rights reserved.",250,370,10,longueur,hauteur-450);
-				*/
 				Panneau bas = new Panneau("Copyright � 2015 DJERIR-EDOO-HENRY "
 						+ "and/or its affiliates. All rights reserved.",150,370,10);
 				bas.setLayout(new BorderLayout());
-				
 				bas.setBackground(Color.black);
-				//bas.setPreferredSize(new Dimension(longueur,hauteur-500));
-			   /*
-			    *  JTextArea display text in any font
-			    *   all of the text is in the same font
-			    *
-				*JTextArea textArea = new JTextArea(
-				*	   "PRO CALENDAR 2015"+
-				*	   "All rights reserved"+
-				*		"May 2015"
-				*	);
-				*	textArea.setFont(new Font("Serif", Font.ITALIC, 16));
-				*	textArea.setLineWrap(true);
-				*	bas.add(textArea);	
-				*	textArea.setWrapStyleWord(true);
-				*/
 
 		//.. BACKGROUND
 				JPanel background = new JPanel();
 				background.setLayout(new BoxLayout(background,BoxLayout.Y_AXIS));
-				
 				background.add(enTete);
 				background.add(menu);
 				background.add(bas);
 				
 		//.. suite CONFIG
-				this.getContentPane().add(background);		
-        }	
+				this.getContentPane().add(background);	               
+                                
+                //.. GESTION fermeture fenêtre
+                    this.addWindowListener( new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				fermer();
+			}
+		});
+         
+        }//Fin construteur MyFrame
+        
+        //PROCEDURE de CONFIRMATION de FERMETURE
+        public void fermer() {
+                        int reponse = JOptionPane.showConfirmDialog(this,
+                             "WARNING! Voulez-vous vraiment quitter l'application",
+                              "Confirmation",
+                              JOptionPane.YES_NO_OPTION,
+                              JOptionPane.QUESTION_MESSAGE);
+                               if(reponse == JOptionPane.YES_OPTION ){
+                                	dispose();
+                                        }
+                    }
+        //PROCEDURE de message lorsque CLICK on CREAMODULE
+         public void clickCrea() {
+                        int reponse = JOptionPane.showConfirmDialog(this,
+                             "<html>SORRY this Menu is UNDER CONSTRUCTION"
+                                     + "<br>____________85% completed____________</br></html>",
+                              "Message ERROR",
+                              JOptionPane.CLOSED_OPTION);
+                             
+                    }
 }
